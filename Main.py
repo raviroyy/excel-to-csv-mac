@@ -1,8 +1,21 @@
+
+import sys
+import os
 import pandas as pd
 import tkinter as tk
 from tkinter import filedialog, messagebox, ttk
 import os
 import webbrowser
+
+
+def resource_path(relative_path):
+    """Get absolute path to resource, works for PyInstaller."""
+    try:
+        # PyInstaller stores files in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+    return os.path.join(base_path, relative_path)
 
 def convert_files():
     files = filedialog.askopenfilenames(filetypes=[("Excel files", "*.xlsx *.xls")])
@@ -52,9 +65,8 @@ upload_btn = tk.Button(
 )
 upload_btn.pack(pady=15)
 
-# Small download icon BELOW upload
-download_icon = tk.PhotoImage(file="assets/download_icon.png")
-download_icon = download_icon.subsample(4, 4)  # resize icon
+download_icon = tk.PhotoImage(file=resource_path("assets/download_icon.png"))
+download_icon = download_icon.subsample(4, 4)
 
 icon_label = tk.Label(root, image=download_icon)
 icon_label.pack(pady=5)
